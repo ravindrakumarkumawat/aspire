@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .transform-3d {
+    transform-style: preserve-3d;
+  }
+}
+
+/* Custom 3D card flip animation */
+.card-flip-enter {
+  transform: rotateY(0deg);
+}
+
+.card-flip-enter-active {
+  transform: rotateY(180deg);
+  transition: transform 500ms;
+}
+
+.card-flip-exit {
+  transform: rotateY(180deg);
+}
+
+.card-flip-exit-active {
+  transform: rotateY(0deg);
+  transition: transform 500ms;
+}
