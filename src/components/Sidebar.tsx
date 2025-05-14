@@ -1,13 +1,14 @@
 import React from 'react';
 import { Box, Typography, List, ListItem, ListItemIcon, ListItemText } from '@mui/material';
+import { getImageUrl } from '@utils/assetUtils';
 
 const Sidebar: React.FC = () => {
   const menuItems = [
-    { icon: '/src/assets/images/aspire-icon-white.svg', label: 'Home', active: false },
-    { icon: '/src/assets/images/cards-green.svg', label: 'Cards', active: true },
-    { icon: '/src/assets/images/payments.svg', label: 'Payments', active: false },
-    { icon: '/src/assets/images/credit.svg', label: 'Credit', active: false },
-    { icon: '/src/assets/images/settings.svg', label: 'Settings', active: false }
+    { icon: getImageUrl('aspire-icon-white.svg'), label: 'Home', active: false },
+    { icon: getImageUrl('cards-green.svg'), label: 'Cards', active: true },
+    { icon: getImageUrl('payments.svg'), label: 'Payments', active: false },
+    { icon: getImageUrl('credit.svg'), label: 'Credit', active: false },
+    { icon: getImageUrl('settings.svg'), label: 'Settings', active: false }
   ];
 
   return (
@@ -25,7 +26,7 @@ const Sidebar: React.FC = () => {
       <Box sx={{ p: 6 }}>
         <Box sx={{ mb: 2 }}>
           <img 
-            src="/src/assets/images/aspire-logo-white.svg" 
+            src={getImageUrl('aspire-logo-green.svg')} 
             alt="Aspire Logo" 
             className="h-8"
           />

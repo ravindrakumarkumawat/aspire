@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Box, Tabs, Tab, Typography, Button, Card, Avatar } from '@mui/material';
-import CardCarousel from '../components/CardCarousel';
-import CardControls from '../components/CardControls';
-import TransactionHistory from '../components/TransactionHistory';
-import CardDetails from '../components/CardDetails';
-import AddCardModal from '../components/AddCardModal';
-import { useCards } from '../hooks/useCards';
+import CardCarousel from '@components/CardCarousel';
+import CardControls from '@components/CardControls';
+import TransactionHistory from '@components/TransactionHistory';
+import CardDetails from '@components/CardDetails';
+import AddCardModal from '@components/AddCardModal';
+import { useCards } from '@hooks/useCards';
+import { getImageUrl } from '@utils/assetUtils';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -85,7 +86,7 @@ const CardsDashboard: React.FC = () => {
             Available balance
           </Typography>
           <div className="md:hidden">
-            <Avatar src="/src/assets/images/aspire-icon-green.svg" sx={{ height: 25, width: 25, borderRadius: 0 }}/>
+            <Avatar src={getImageUrl('aspire-icon-green.svg')} sx={{ height: 25, width: 25, borderRadius: 0 }}/>
           </div>
         </div>
         <div className="flex justify-between items-center mb-6">
@@ -120,7 +121,7 @@ const CardsDashboard: React.FC = () => {
               }
             }}
           >
-            <Avatar src="/src/assets/images/add.svg" alt="Add" className="h-4 w-4 mr-1"  sx={{ borderRadius: 0, height: 16, width: 16 }}/>
+            <Avatar src={getImageUrl('add.svg')} alt="Add" className="h-4 w-4 mr-1"  sx={{ borderRadius: 0, height: 16, width: 16 }}/>
             <Typography sx={{ fontSize: '14px', fontWeight: 500 }}>New card</Typography>
           </Button>
         </div>

@@ -1,7 +1,8 @@
 import React from 'react';
 import { Check } from 'lucide-react';
-import { Card } from '../types';
+import { Card } from '@types';
 import { Accordion, AccordionDetails, AccordionSummary, Avatar, Typography } from '@mui/material';
+import { getImageUrl } from '@utils/assetUtils';
 
 interface CardDetailsProps {
   card: Card | null;
@@ -13,12 +14,12 @@ const CardDetails: React.FC<CardDetailsProps> = ({ card }) => {
   return (
     <Accordion className="overflow-hidden border" sx={{ borderRadius: '8pt', backgroundColor: '#F5F9FF', boxShadow: 'none' }}>
       <AccordionSummary className="flex justify-between items-center mb-4" 
-        expandIcon={<Avatar src="/src/assets/images/down-arrow.svg" alt="Card Details" sx={{ height: 20, width: 20, borderRadius: 0 }} />}
+        expandIcon={<Avatar src={getImageUrl('down-arrow.svg')} alt="Card Details" sx={{ height: 20, width: 20, borderRadius: 0 }} />}
         aria-controls="panel1-content"
         id="panel1-header"
       >
         <div className="flex items-center gap-3">
-          <Avatar src="/src/assets/images/card-details.svg" alt="Card Details" sx={{ width: 24, height: 24, borderRadius: 0 }} />
+          <Avatar src={getImageUrl('card-details.svg')} alt="Card Details" sx={{ width: 24, height: 24, borderRadius: 0 }} />
           <Typography sx={{ color: '#0C365A', fontSize: '14pt' }}>Card details</Typography>
         </div>
       </AccordionSummary>

@@ -1,12 +1,13 @@
 import React from 'react';
+import { getImageUrl } from '@utils/assetUtils';
 
 const MobileNav: React.FC = () => {
   const menuItems = [
-    { icon: "/src/assets/images/aspire-icon-white.svg", label: 'Home', active: false },
-    { icon: "/src/assets/images/cards-green.svg", label: 'Cards', active: true },
-    { icon: "/src/assets/images/payments.svg", label: 'Payments', active: false },
-    { icon: "/src/assets/images/credit.svg", label: 'Credit', active: false },
-    { icon: "/src/assets/images/user.svg", label: 'Profile', active: false }
+    { icon: getImageUrl('aspire-icon-white.svg'), label: 'Home', active: false },
+    { icon: getImageUrl('cards-green.svg'), label: 'Cards', active: true },
+    { icon: getImageUrl('payments.svg'), label: 'Payments', active: false },
+    { icon: getImageUrl('credit.svg'), label: 'Credit', active: false },
+    { icon: getImageUrl('user.svg'), label: 'Profile', active: false }
   ];
 
   return (

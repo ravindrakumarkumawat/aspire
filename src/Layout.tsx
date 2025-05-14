@@ -11,7 +11,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
     <div className="min-h-screen bg-white lg:bg-white relative">
       <div className="flex h-screen">
         {/* Desktop Sidebar - hidden on mobile */}
-        <div className="hidden lg:block lg:w-64 flex-shrink-0">
+        <div className="hidden lg:block lg:w-[21.25rem] flex-shrink-0">
           <Sidebar />
         </div>
 

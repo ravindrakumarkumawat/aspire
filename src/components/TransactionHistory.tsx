@@ -1,6 +1,7 @@
 import React, { useState, useMemo, useCallback } from 'react';
-import { Transaction } from '../types';
+import { Transaction } from '@types';
 import { Card, Accordion, AccordionDetails, AccordionSummary, Avatar, Typography } from '@mui/material';
+import { getImageUrl } from '@utils/assetUtils';
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
@@ -14,17 +15,17 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, c
       case 'technology':
       case 'entertainment':
         return {
-          icon_url: '/src/assets/images/megaphone.svg' ,
+          icon_url: getImageUrl('megaphone.svg'),
           background_color: '#F251951A'
         };
       case 'transportation':
         return {
-          icon_url: '/src/assets/images/flights.svg' ,
+          icon_url: getImageUrl('flights.svg'),
           background_color: '#00D6B51A'
         }
       default:
         return {
-          icon_url: '/src/assets/images/hamleys.svg' ,
+          icon_url: getImageUrl('hamleys.svg'),
           background_color: '#009DFF1A'
         }
     }
@@ -43,12 +44,12 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, c
   return (
     <Accordion defaultExpanded className="overflow-hidden border" sx={{ borderRadius: '8pt', backgroundColor: '#F5F9FF', boxShadow: 'none', borderColor: '#F0F0F0' }}>
       <AccordionSummary className="flex justify-between items-center mb-4" 
-        expandIcon={<Avatar src="/src/assets/images/down-arrow.svg" alt="Card Details" sx={{ height: 20, width: 20, borderRadius: 0 }} />}
+        expandIcon={<Avatar src={getImageUrl('down-arrow.svg')} alt="Card Details" sx={{ height: 20, width: 20, borderRadius: 0 }} />}
         aria-controls="panel1-content"
         id="panel1-header"
       >
         <div className="flex items-center gap-3">
-          <Avatar src="/src/assets/images/recent-transactions.svg" alt="Card Details" sx={{ width: 24, height: 24, borderRadius: 0 }} />
+          <Avatar src={getImageUrl('recent-transactions.svg')} alt="Card Details" sx={{ width: 24, height: 24, borderRadius: 0 }} />
           <Typography sx={{ color: '#0C365A', fontSize: '14pt' }}>Recent transactions</Typography>
         </div>
       </AccordionSummary>
@@ -77,7 +78,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, c
                   </Typography>
                   <div className="flex items-center mt-0.5 sm:mt-2">
                     <Card sx={{ width: 24, height: 20, boxShadow: 'none' }} className="mr-1 !bg-[#325BAF] flex items-center justify-center">
-                      <Avatar src="/src/assets/images/cards-white.svg" alt="Aspire Icon" sx={{ width: 10, height: 7.86, borderRadius: 0 }} />
+                      <Avatar src={getImageUrl('cards-white.svg')} alt="Aspire Icon" sx={{ width: 10, height: 7.86, borderRadius: 0 }} />
                     </Card>
                     <Typography className="text-[12pt] text-[#325BAF]">
                       {transaction.status === 'completed' ? 'Refund on debit card' : 'Charged to debit card'}
@@ -87,7 +88,7 @@ const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, c
               </div>
               <Typography className={`flex gap-1 items-center text-sm sm:text-base font-semibold ${transaction.amount > 0 ? 'text-[#222222]' : 'text-[#01D167]'}`}>
                 {transaction.amount > 0 ? '-' : '+'} {currency} {Math.abs(transaction.amount).toFixed(0)} 
-                <Avatar src="/src/assets/images/right-icon.svg" alt="Aspire Icon" sx={{ width: 10, height: 12, borderRadius: 0 }} />
+                <Avatar src={getImageUrl('right-icon.svg')} alt="Aspire Icon" sx={{ width: 10, height: 12, borderRadius: 0 }} />
               </Typography>
             </div>
           ))}
