@@ -3,11 +3,11 @@ import { getImageUrl } from '@utils/assetUtils';
 
 const MobileNav: React.FC = () => {
   const menuItems = [
-    { icon: getImageUrl('aspire-icon-white.svg'), label: 'Home', active: false },
+    { icon: getImageUrl('home-m-logo.svg'), label: 'Home', active: false },
     { icon: getImageUrl('cards-green.svg'), label: 'Cards', active: true },
-    { icon: getImageUrl('payments.svg'), label: 'Payments', active: false },
-    { icon: getImageUrl('credit.svg'), label: 'Credit', active: false },
-    { icon: getImageUrl('user.svg'), label: 'Profile', active: false }
+    { icon: getImageUrl('payments-m.svg'), label: 'Payments', active: false },
+    { icon: getImageUrl('credit-m.svg'), label: 'Credit', active: false },
+    { icon: getImageUrl('profile-m.svg'), label: 'Profile', active: false }
   ];
 
   return (
@@ -19,7 +19,7 @@ const MobileNav: React.FC = () => {
             className={`flex flex-col items-center justify-center p-2 ${
               item.active 
                 ? 'text-[#01D167]' 
-                : 'text-gray-500 hover:text-gray-900'
+                : 'text-[#DDDDDD]'
             }`}
           >
             <img 
@@ -28,7 +28,7 @@ const MobileNav: React.FC = () => {
               className="w-5 h-5"
               style={{ filter: item.active ? 'none' : 'grayscale(100%)' }}
             />
-            <span className="text-xs mt-1 font-medium">{item.label}</span>
+            <span className="text-[9pt] mt-1 font-medium">{item.label}</span>
           </button>
         ))}
       </div>
