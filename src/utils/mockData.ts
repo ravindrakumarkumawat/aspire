@@ -40,8 +40,6 @@ export const generateMockTransactions = (cardIds: string[]): Transaction[] => {
     'Netflix',
     'Uber',
     'Starbucks',
-    'Walmart',
-    'Target'
   ];
   
   const categories = [
@@ -49,7 +47,6 @@ export const generateMockTransactions = (cardIds: string[]): Transaction[] => {
     'Shopping',
     'Entertainment',
     'Transportation',
-    'Food & Dining',
     'Groceries'
   ];
   
@@ -61,12 +58,13 @@ export const generateMockTransactions = (cardIds: string[]): Transaction[] => {
       const date = new Date();
       date.setDate(date.getDate() - Math.floor(Math.random() * 30));
       
+      const randomIndex = Math.floor(Math.random() * merchants.length)
       transactions.push({
         id: `trans-${cardId}-${i + 1}`,
         cardId,
         amount: Math.floor(Math.random() * 200) + 10,
-        merchant: merchants[Math.floor(Math.random() * merchants.length)],
-        category: categories[Math.floor(Math.random() * categories.length)],
+        merchant: merchants[randomIndex],
+        category: categories[randomIndex],
         date: date.toISOString(),
         status: Math.random() > 0.1 ? 'completed' : (Math.random() > 0.5 ? 'pending' : 'declined')
       });

@@ -1,6 +1,6 @@
-import React from 'react';
-import { ChevronDown, ShoppingBag, Plane } from 'lucide-react';
+import React, { useState, useMemo, useCallback } from 'react';
 import { Transaction } from '../types';
+import { Card, Accordion, AccordionDetails, AccordionSummary, Avatar, Typography } from '@mui/material';
 
 interface TransactionHistoryProps {
   transactions: Transaction[];
@@ -8,69 +8,102 @@ interface TransactionHistoryProps {
 }
 
 const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, currency }) => {
-  // Function to get icon based on category
   const getTransactionIcon = (category: string) => {
+    
     switch (category.toLowerCase()) {
-      case 'shopping':
-        return <ShoppingBag size={16} className="text-blue-500" />;
-      case 'travel':
-        return <Plane size={16} className="text-blue-500" />;
+      case 'technology':
+      case 'entertainment':
+        return {
+          icon_url: '/src/assets/images/megaphone.svg' ,
+          background_color: '#F251951A'
+        };
+      case 'transportation':
+        return {
+          icon_url: '/src/assets/images/flights.svg' ,
+          background_color: '#00D6B51A'
+        }
       default:
-        return <ShoppingBag size={16} className="text-blue-500" />;
+        return {
+          icon_url: '/src/assets/images/hamleys.svg' ,
+          background_color: '#009DFF1A'
+        }
     }
   };
 
-  return (
-    <div className="bg-white rounded-lg shadow-sm overflow-hidden p-4">
-      <div className="flex justify-between items-center mb-3 sm:mb-4">
-        <h2 className="text-base sm:text-lg font-semibold text-gray-800">Recent transactions</h2>
-        <button className="text-blue-500">
-          <ChevronDown size={18} />
-        </button>
-      </div>
+  const [showAllTransactions, setShowAllTransactions] = useState(false);
+  
+  const displayedTransactions = useMemo(() => {
+    return showAllTransactions ? transactions : transactions.slice(0, 2);
+  }, [transactions, showAllTransactions]);
+    
+  const handleViewAllClick = useCallback(() => {
+    setShowAllTransactions(prev => !prev);
+  }, []);
 
+  return (
+    <Accordion defaultExpanded className="overflow-hidden border" sx={{ borderRadius: '8pt', backgroundColor: '#F5F9FF', boxShadow: 'none', borderColor: '#F0F0F0' }}>
+      <AccordionSummary className="flex justify-between items-center mb-4" 
+        expandIcon={<Avatar src="/src/assets/images/down-arrow.svg" alt="Card Details" sx={{ height: 20, width: 20, borderRadius: 0 }} />}
+        aria-controls="panel1-content"
+        id="panel1-header"
+      >
+        <div className="flex items-center gap-3">
+          <Avatar src="/src/assets/images/recent-transactions.svg" alt="Card Details" sx={{ width: 24, height: 24, borderRadius: 0 }} />
+          <Typography sx={{ color: '#0C365A', fontSize: '14pt' }}>Recent transactions</Typography>
+        </div>
+      </AccordionSummary>
+      <AccordionDetails className="bg-[#EDFFF5] !p-0">
       {transactions.length === 0 ? (
         <div className="text-center py-3 sm:py-4 text-gray-500 text-sm">
           No transactions available.
         </div>
       ) : (
-        <div className="space-y-3 sm:space-y-4">
-          {transactions.map((transaction) => (
+        <div className="px-6 bg-white rounded-br-[8pt] rounded-bl-[8pt]">{
+          displayedTransactions.map((transaction) => (
             <div 
               key={transaction.id}
-              className="flex items-center justify-between py-2 sm:py-3 border-b border-gray-100 last:border-b-0"
+              className="flex items-start justify-between py-2 sm:py-3 md:py-4 border-b border-gray-100 last:border-b-0"
             >
-              <div className="flex items-center space-x-2 sm:space-x-3">
-                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-50 rounded-full flex items-center justify-center">
-                  {getTransactionIcon(transaction.category)}
+              <div className="flex items-start space-x-4 sm:space-x-3">
+                <div className="rounded-full flex items-center justify-center">
+                  <Card sx={{ backgroundColor: getTransactionIcon(transaction.category).background_color, borderRadius: '50%', boxShadow: 'none', }} className="p-4">
+                    <Avatar src={getTransactionIcon(transaction.category).icon_url} className="text-[#00D6B51A]" sx={{ width: 16, height: 16, borderRadius: 0 }} />
+                  </Card>
                 </div>
                 <div>
-                  <div className="text-sm sm:text-base font-medium">{transaction.merchant}</div>
-                  <div className="text-[10px] sm:text-xs text-gray-500">
+                  <Typography className="text-[#222222] text-[14pt]">{transaction.merchant}</Typography>
+                  <Typography className="text-[#AAAAAA] text-[13pt]">
                     {new Date(transaction.date).toLocaleDateString('en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
-                  </div>
-                  <div className={`text-[10px] sm:text-xs mt-0.5 sm:mt-1 ${
-                    transaction.status === 'completed' ? 'text-blue-600' : 
-                    transaction.status === 'pending' ? 'text-yellow-600' : 'text-red-600'
-                  }`}>
-                    {transaction.status === 'completed' ? 'Refund on debit card' : 'Charged to debit card'}
+                  </Typography>
+                  <div className="flex items-center mt-0.5 sm:mt-2">
+                    <Card sx={{ width: 24, height: 20, boxShadow: 'none' }} className="mr-1 !bg-[#325BAF] flex items-center justify-center">
+                      <Avatar src="/src/assets/images/cards-white.svg" alt="Aspire Icon" sx={{ width: 10, height: 7.86, borderRadius: 0 }} />
+                    </Card>
+                    <Typography className="text-[12pt] text-[#325BAF]">
+                      {transaction.status === 'completed' ? 'Refund on debit card' : 'Charged to debit card'}
+                    </Typography>
                   </div>
                 </div>
               </div>
-              <div className={`text-sm sm:text-base font-semibold ${transaction.amount > 0 ? 'text-red-500' : 'text-green-500'}`}>
-                {transaction.amount > 0 ? '-' : '+'} {currency} {Math.abs(transaction.amount).toFixed(2)}
-              </div>
+              <Typography className={`flex gap-1 items-center text-sm sm:text-base font-semibold ${transaction.amount > 0 ? 'text-[#222222]' : 'text-[#01D167]'}`}>
+                {transaction.amount > 0 ? '-' : '+'} {currency} {Math.abs(transaction.amount).toFixed(0)} 
+                <Avatar src="/src/assets/images/right-icon.svg" alt="Aspire Icon" sx={{ width: 10, height: 12, borderRadius: 0 }} />
+              </Typography>
             </div>
           ))}
-        </div>
-      )}
-      
-      <div className="mt-3 sm:mt-4 text-center">
-        <button className="text-green-500 text-xs sm:text-sm font-medium py-1.5 sm:py-2 px-3 sm:px-4 bg-green-50 rounded-md">
-          View all card transactions
-        </button>
-      </div>
-    </div>
+          </div>
+        )}
+        <Card 
+            className="text-center cursor-pointer" 
+            sx={{ boxShadow: 'none', borderRadius: '8pt' }}
+            onClick={handleViewAllClick}
+          >
+            <Typography className="text-[#01D167] text-[13pt] sm:text-sm font-bold py-4 bg-[#EDFFF5] rounded-bl-[8pt] rounded-br-[8pt]">
+              {showAllTransactions ? "Show less transactions" : "View all card transactions"}
+            </Typography>
+          </Card>
+      </AccordionDetails>
+    </Accordion>
   );
 };
 

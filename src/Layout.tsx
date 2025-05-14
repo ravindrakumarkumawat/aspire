@@ -8,14 +8,14 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-white lg:bg-white">
-      <div className="flex">
+    <div className="min-h-screen bg-white lg:bg-white relative">
+      <div className="flex h-screen">
         {/* Desktop Sidebar - hidden on mobile */}
-        <div className="hidden lg:block">
+        <div className="hidden lg:block lg:w-64 flex-shrink-0">
           <Sidebar />
         </div>
 
-        <main className="flex-1 min-h-screen w-full lg:w-auto pb-16 lg:pb-0 bg-white lg:bg-white md:bg-[#0C365A] sm:bg-[#0C365A] bg-[#0C365A]">
+        <main className="flex-1 h-screen overflow-y-auto overscroll-contain lg:w-auto pb-16 lg:pb-0 bg-[#0C365A] lg:bg-white will-change-transform">
           {children}
         </main>
       </div>

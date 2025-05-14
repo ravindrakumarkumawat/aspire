@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
-import { Eye } from 'lucide-react';
+import React from 'react';
 import { Card as CardType } from '../types';
+import { Avatar, Typography } from '@mui/material';
 
 interface CardProps {
   card: CardType;
   isFront: boolean;
   onFlip: () => void;
   className?: string;
+  showCardNumber?: boolean;
 }
 
-const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '' }) => {
-  const [showCardNumber, setShowCardNumber] = useState(false);
-  
-  const toggleCardNumber = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowCardNumber(prev => !prev);
-  };
+const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', showCardNumber = false }) => {
   
   const cardClasses = `
-    relative w-full max-w-sm h-48 sm:h-56 rounded-xl shadow-lg p-4 sm:p-6 
+    w-full max-w-sm h-48 sm:h-56 rounded-xl shadow-lg p-4 sm:p-6 
     transition-all duration-500 transform cursor-pointer
     ${card.frozen ? 'opacity-75 grayscale' : ''}
     ${className}
@@ -29,68 +24,105 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '' }) =>
     bg-[#01D167] text-white
   `;
   
+  const backCardClasses = `
+    ${cardClasses}
+    bg-[#01D167] text-white
+  `;
+  
   if (isFront) {
     return (
       <div className={frontCardClasses} onClick={onFlip}>
-        {card.frozen && (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="bg-black bg-opacity-60 text-white font-bold py-1 px-4 rounded-full transform -rotate-12 uppercase text-lg">
-              Frozen
-            </div>
-          </div>
-        )}
-        
-        <div className="absolute top-4 sm:top-6 right-4 sm:right-6">
-          <div className="flex">
-            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-[#EB001B] rounded-full opacity-80 -mr-2 sm:-mr-3"></div>
-            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-[#F79E1B] rounded-full opacity-80"></div>
-          </div>
-        </div>
-        
-        <div className="absolute top-4 sm:top-6 left-4 sm:left-6">
-          <div className="flex items-center">
-            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded flex items-center justify-center mr-2">
-              <div className="w-0 h-0 border-t-[6px] sm:border-t-[8px] border-t-transparent border-l-[9px] sm:border-l-[12px] border-l-[#01D167] border-b-[6px] sm:border-b-[8px] border-b-transparent"></div>
-            </div>
-            <span className="text-white font-bold text-sm sm:text-base">aspire</span>
-          </div>
-        </div>
-        
-        <div className="mt-12 sm:mt-16">
-          <div className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">{card.name}</div>
-          
-          <div className="flex items-center mb-4 sm:mb-6">
-            <div className="text-lg sm:text-xl tracking-widest font-medium">
-              {showCardNumber ? card.cardNumber : '•••• •••• •••• ' + card.cardNumber.slice(-4)}
+        <div className="flex flex-col h-full">
+          {/* Top section with frozen status, logos */}
+          <div className="flex-none">
+            {card.frozen && (
+              <div className="flex items-center justify-center mb-2">
+                <div className="bg-black bg-opacity-60 text-white font-bold py-1 px-4 rounded-full transform -rotate-12 uppercase text-lg">
+                  Frozen
+                </div>
+              </div>
+            )}
+            
+            <div className="flex justify-end mb-4">
+              <Avatar src="/src/assets/images/aspire-logo-white.svg" alt="aspire-logo"  sx={{ height: 23.7, width: 83.52, borderRadius: 0 }} />
             </div>
           </div>
           
-          <div className="flex justify-between items-end">
-            <div>
-              <div className="text-xs opacity-80 mb-1">Thru: {card.expiryDate}</div>
-            </div>
+          {/* Middle section with card holder name and number */}
+          <div className="flex-grow">
+            <Typography className="text-[24px] font-bold ">{card.name}</Typography>
             
-            <div>
-              <div className="text-xs opacity-80 mb-1">CVV: ***</div>
+            <div className="flex justify-between flex-col items-start mt-[27px]">
+              <div className="flex flex space-x-4 sm:space-x-6">
+                <div className="text-lg sm:text-xl tracking-widest font-medium">
+                  {showCardNumber ? card.cardNumber : '•••• •••• •••• ' + card.cardNumber.slice(-4)}
+                </div>
+              </div>
+              <div className="flex gap-8 mt-[18px]">
+                <div>
+                  <div className="text-sm sm:text-base opacity-90">Thru: {card.expiryDate}</div>
+                </div>
+                
+                <div>
+                  <div className="text-sm sm:text-base opacity-90">CVV: ***</div>
+                </div>
+              </div>
             </div>
-            
-            <div className="text-right">
-              <div className="text-white font-bold text-lg sm:text-xl">VISA</div>
+          </div>
+          
+          <div className="flex-none">
+            <div className="flex justify-between items-end">
+              <div></div>
+              <div>
+                <Avatar src="/src/assets/images/visa.svg" alt="Visa" sx={{ width: 66.59, height: 22.57, borderRadius: 0 }} />
+              </div>
             </div>
           </div>
         </div>
-        
-        <button 
-          onClick={toggleCardNumber}
-          className="absolute top-4 sm:top-6 right-16 sm:right-24 text-[#01D167] bg-white px-1.5 sm:px-2 py-0.5 sm:py-1 rounded-md text-[10px] sm:text-xs font-medium flex items-center"
-        >
-          <Eye size={12} className="mr-1" /> Show card number
-        </button>
       </div>
     );
   }
   
-  return null; // We're not using the back side in this design
+  return (
+    <div className={backCardClasses} onClick={onFlip}>
+      <div className="flex flex-col h-full">
+        {/* Back side of the card */}
+        <div className="flex-none">
+          <div className="flex justify-between mb-4">
+            <div className="flex items-center">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded flex items-center justify-center mr-2">
+                <img src="/src/assets/images/aspire-logo-green.svg" alt="Aspire" className="h-3 sm:h-4" />
+              </div>
+              <span className="text-white font-bold text-sm sm:text-base">aspire</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Middle section with security info */}
+        <div className="flex-grow flex flex-col justify-center items-center">
+          <div className="w-full h-8 bg-black bg-opacity-20 mb-4"></div>
+          <div className="flex justify-end w-full pr-4">
+            <div className="bg-white text-[#01D167] text-xs font-bold py-1 px-2 rounded">
+              {card.cvv}
+            </div>
+          </div>
+        </div>
+        
+        {/* Bottom section with additional info */}
+        <div className="flex-none">
+          <div className="flex justify-between items-end">
+            <div>
+              <div className="text-xs opacity-80 mb-1">Card ID: {card.id.slice(-4)}</div>
+            </div>
+            
+            <div>
+              <img src="/src/assets/images/visa.svg" alt="Visa" className="h-6 sm:h-8" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Card;

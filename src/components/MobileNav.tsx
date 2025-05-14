@@ -1,13 +1,12 @@
 import React from 'react';
-import { Home, CreditCard, Wallet, User, Settings } from 'lucide-react';
 
 const MobileNav: React.FC = () => {
   const menuItems = [
-    { icon: <Home size={20} />, label: 'Home', active: false },
-    { icon: <CreditCard size={20} />, label: 'Cards', active: true },
-    { icon: <Wallet size={20} />, label: 'Payments', active: false },
-    { icon: <User size={20} />, label: 'Credit', active: false },
-    { icon: <Settings size={20} />, label: 'Settings', active: false }
+    { icon: "/src/assets/images/aspire-icon-white.svg", label: 'Home', active: false },
+    { icon: "/src/assets/images/cards-green.svg", label: 'Cards', active: true },
+    { icon: "/src/assets/images/payments.svg", label: 'Payments', active: false },
+    { icon: "/src/assets/images/credit.svg", label: 'Credit', active: false },
+    { icon: "/src/assets/images/user.svg", label: 'Profile', active: false }
   ];
 
   return (
@@ -22,9 +21,12 @@ const MobileNav: React.FC = () => {
                 : 'text-gray-500 hover:text-gray-900'
             }`}
           >
-            {React.cloneElement(item.icon, { 
-              color: item.active ? '#01D167' : 'currentColor' 
-            })}
+            <img 
+              src={item.icon} 
+              alt={item.label}
+              className="w-5 h-5"
+              style={{ filter: item.active ? 'none' : 'grayscale(100%)' }}
+            />
             <span className="text-xs mt-1 font-medium">{item.label}</span>
           </button>
         ))}

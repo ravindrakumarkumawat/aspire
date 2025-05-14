@@ -26,7 +26,7 @@ export const useCards = () => {
           setCards(JSON.parse(storedCards));
           setTransactions(JSON.parse(storedTransactions));
         } else {
-          const mockCards = generateMockCards();
+          const mockCards = generateMockCards(Math.floor(Math.random() * (10 - 3 + 1)) + 3);
           const mockTransactions = generateMockTransactions(mockCards.map(card => card.id));
           
           setCards(mockCards);
@@ -50,14 +50,12 @@ export const useCards = () => {
     fetchCards();
   }, []);
 
-  // Save cards to localStorage whenever they change
   useEffect(() => {
     if (!isLoading && cards.length > 0) {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(cards));
     }
   }, [cards, isLoading]);
 
-  // Save transactions to localStorage whenever they change
   useEffect(() => {
     if (!isLoading && transactions.length > 0) {
       localStorage.setItem(TRANSACTIONS_KEY, JSON.stringify(transactions));
