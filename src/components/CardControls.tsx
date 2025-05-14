@@ -1,7 +1,8 @@
 import React from 'react';
 import { Lock, Sliders, CreditCard, RefreshCcw, Trash2 } from 'lucide-react';
 import { Card as CardValue } from '../types';
-import { Card } from '@mui/material';
+import { Avatar, Card } from '@mui/material';
+import { getImageUrl } from '@utils/assetUtils';
 
 interface CardControlsProps {
   card: CardValue | null;
@@ -14,31 +15,31 @@ const CardControls: React.FC<CardControlsProps> = ({ card, onFreezeCard }) => {
   
   const controls = [
     {
-      icon: <Lock size={18} color="#325BAF" />,
+      icon: <Avatar src={getImageUrl('freeze-card.svg')} alt="Card Details" sx={{ width: 32, height: 32, borderRadius: 0 }} />,
       label: card.frozen ? 'Unfreeze card' : 'Freeze card',
       onClick: () => onFreezeCard(card.id),
       bgColor: '#EDF3FF'
     },
     {
-      icon: <Sliders size={18} color="#325BAF" />,
+      icon: <Avatar src={getImageUrl('set-spend-limit.svg')} alt="Card Details" sx={{ width: 32, height: 32, borderRadius: 0 }} />,
       label: 'Set spend limit',
       onClick: () => {},
       bgColor: '#EDF3FF'
     },
     {
-      icon: <CreditCard size={18} color="#325BAF" />,
+      icon: <Avatar src={getImageUrl('gpay.svg')} alt="Card Details" sx={{ width: 32, height: 32, borderRadius: 0 }} />,
       label: 'Add to GPay',
       onClick: () => {},
       bgColor: '#EDF3FF'
     },
     {
-      icon: <RefreshCcw size={18} color="#325BAF" />,
+      icon: <Avatar src={getImageUrl('replace-card.svg')} alt="Card Details" sx={{ width: 32, height: 32, borderRadius: 0 }} />,
       label: 'Replace card',
       onClick: () => {},
       bgColor: '#EDF3FF'
     },
     {
-      icon: <Trash2 size={18} color="#325BAF" />,
+      icon: <Avatar src={getImageUrl('cancel-card.svg')} alt="Card Details" sx={{ width: 32, height: 32, borderRadius: 0 }} />,
       label: 'Cancel card',
       onClick: () => {},
       bgColor: '#EDF3FF'
