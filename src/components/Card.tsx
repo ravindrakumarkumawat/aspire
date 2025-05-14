@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card as CardType } from '../types';
+import { Card as CardType } from '@types';
 import { Avatar, Typography } from '@mui/material';
+import { getImageUrl } from '@utils/assetUtils';
 
 interface CardProps {
   card: CardType;
@@ -44,7 +45,7 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
             )}
             
             <div className="flex justify-end mb-4">
-              <Avatar src="/src/assets/images/aspire-logo-white.svg" alt="aspire-logo"  sx={{ height: 23.7, width: 83.52, borderRadius: 0 }} />
+              <Avatar src={getImageUrl('aspire-logo-white.svg')} alt="aspire-logo"  sx={{ height: 23.7, width: 83.52, borderRadius: 0 }} />
             </div>
           </div>
           
@@ -74,7 +75,7 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
             <div className="flex justify-between items-end">
               <div></div>
               <div>
-                <Avatar src="/src/assets/images/visa.svg" alt="Visa" sx={{ width: 66.59, height: 22.57, borderRadius: 0 }} />
+                <Avatar src={getImageUrl('visa.svg')} alt="Visa" sx={{ width: 66.59, height: 22.57, borderRadius: 0 }} />
               </div>
             </div>
           </div>
@@ -91,7 +92,7 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
           <div className="flex justify-between mb-4">
             <div className="flex items-center">
               <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white rounded flex items-center justify-center mr-2">
-                <img src="/src/assets/images/aspire-logo-green.svg" alt="Aspire" className="h-3 sm:h-4" />
+                <img src={getImageUrl('aspire-logo-green.svg')} alt="Aspire" className="h-3 sm:h-4" />
               </div>
               <span className="text-white font-bold text-sm sm:text-base">aspire</span>
             </div>
@@ -116,7 +117,7 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
             </div>
             
             <div>
-              <img src="/src/assets/images/visa.svg" alt="Visa" className="h-6 sm:h-8" />
+              <img src={getImageUrl('visa.svg')} alt="Visa" className="h-6 sm:h-8" />
             </div>
           </div>
         </div>
