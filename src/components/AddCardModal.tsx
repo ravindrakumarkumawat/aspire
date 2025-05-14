@@ -15,8 +15,7 @@ const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose, onAddCard 
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Basic validation
+
     if (!cardName.trim()) {
       setError('Card name is required');
       return;
@@ -26,7 +25,6 @@ const AddCardModal: React.FC<AddCardModalProps> = ({ isOpen, onClose, onAddCard 
     setIsSubmitting(true);
     
     try {
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 800));
       onAddCard(cardName);
       setCardName('');

@@ -66,7 +66,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
     const currentX = e.targetTouches[0].clientX;
     setTouchEnd(currentX);
     
-    // Calculate drag offset for visual feedback
     const offset = currentX - startX;
     setDragOffset(offset);
   };
@@ -94,7 +93,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
     setTouchEnd(null);
   };
   
-  // Mouse drag functionality for desktop
   const handleMouseDown = (e: React.MouseEvent) => {
     setIsDragging(true);
     setStartX(e.clientX);
@@ -120,7 +118,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
     setDragOffset(0);
   };
   
-  // Handle mouse leave to prevent stuck dragging state
   const handleMouseLeave = () => {
     if (isDragging) {
       setIsDragging(false);
@@ -128,7 +125,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
     }
   };
   
-  // Keyboard navigation with infinite scrolling
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'ArrowLeft') {
       changeCard(activeIndex - 1);
@@ -151,7 +147,6 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
   
   return (
     <div className="flex flex-col items-center">
-      {/* Show card number section */}
       <div className="flex justify-end w-full max-w-sm mb-2">
         <button 
           onClick={toggleCardNumber}
@@ -162,9 +157,7 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
         </button>
       </div>
       
-      {/* Card display section with swipe indicators */}
       <div className="w-full flex items-center justify-center mb-4 relative">
-        {/* Always show left indicator for infinite scrolling */}
         <div className="absolute left-0 top-1/2 transform -translate-y-1/2 w-6 h-12 flex items-center justify-center opacity-50">
           <div className="w-1 h-8 bg-gray-300 rounded-full"></div>
         </div>
@@ -228,13 +221,11 @@ const CardCarousel: React.FC<CardCarouselProps> = ({
           </div>
         </div>
         
-        {/* Always show right indicator for infinite scrolling */}
         <div className="absolute right-0 top-1/2 transform -translate-y-1/2 w-6 h-12 flex items-center justify-center opacity-50">
           <div className="w-1 h-8 bg-gray-300 rounded-full"></div>
         </div>
       </div>
       
-      {/* Card navigation controls */}
       <div className="flex justify-center mt-2">
         <div className="flex space-x-2">
           {cards.map((_, index) => (

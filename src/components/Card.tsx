@@ -34,7 +34,6 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
     return (
       <div className={frontCardClasses} onClick={onFlip}>
         <div className="flex flex-col h-full">
-          {/* Top section with frozen status, logos */}
           <div className="flex-none">
             {card.frozen && (
               <div className="flex items-center justify-center mb-2">
@@ -49,7 +48,6 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
             </div>
           </div>
           
-          {/* Middle section with card holder name and number */}
           <div className="flex-grow">
             <Typography className="text-[24px] font-bold ">{card.name}</Typography>
             
@@ -87,7 +85,6 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
   return (
     <div className={backCardClasses} onClick={onFlip}>
       <div className="flex flex-col h-full">
-        {/* Back side of the card */}
         <div className="flex-none">
           <div className="flex justify-between mb-4">
             <div className="flex items-center">
@@ -98,8 +95,7 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
             </div>
           </div>
         </div>
-        
-        {/* Middle section with security info */}
+
         <div className="flex-grow flex flex-col justify-center items-center">
           <div className="w-full h-8 bg-black bg-opacity-20 mb-4"></div>
           <div className="flex justify-end w-full pr-4">
@@ -109,7 +105,6 @@ const Card: React.FC<CardProps> = ({ card, isFront, onFlip, className = '', show
           </div>
         </div>
         
-        {/* Bottom section with additional info */}
         <div className="flex-none">
           <div className="flex justify-between items-end">
             <div>

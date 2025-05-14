@@ -44,6 +44,10 @@ const CardsDashboard: React.FC = () => {
     setActiveCardIndex, 
     addCard, 
     toggleFreezeCard,
+    setSpendLimit,
+    addToGPay,
+    replaceCard,
+    cancelCard,
     getCardTransactions,
     isLoading
   } = useCards();
@@ -72,7 +76,7 @@ const CardsDashboard: React.FC = () => {
   }
   
   return (
-    <div className="p-4 pt-8 md:p-8 md:pt-8">
+    <div className="pt-8 xs:p-0 md:p-8 md:pt-8">
       <div className="mb-6">
         <div className="flex justify-between items-center mb-2">
           <Typography 
@@ -158,42 +162,45 @@ const CardsDashboard: React.FC = () => {
         </Box>
       </div>
 
-      <Box>
-        <Card sx={{ py: 4, px: 5 }}>
-          <CustomTabPanel value={activeTab} index={0}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
-              <div className="space-y-4 md:space-y-6">
-                <CardCarousel 
-                  cards={cards}
-                  activeIndex={activeCardIndex}
-                  onChangeActive={setActiveCardIndex}
-                />
-                
-                <CardControls 
-                  card={activeCard}
-                  onFreezeCard={toggleFreezeCard}
-                />
-              </div>
+      <Card sx={{ py: 4, px: { xs: 3, md: 5 } }}>
+        <CustomTabPanel value={activeTab} index={0}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <div className="space-y-4 md:space-y-6">
+              <CardCarousel 
+                cards={cards}
+                activeIndex={activeCardIndex}
+                onChangeActive={setActiveCardIndex}
+              />
+              
+              <CardControls 
+                card={activeCard}
+                onFreezeCard={toggleFreezeCard}
+                onSetSpendLimit={setSpendLimit}
+                onAddToGPay={addToGPay}
+                onReplaceCard={(cardId, newName, cardNumber, expiryDate, cvv) => 
+                  replaceCard(cardId, newName, cardNumber, expiryDate, cvv)}
+                onCancelCard={cancelCard}
+              />
+            </div>
 
-              <div className="space-y-4 md:space-y-6">
-                <CardDetails card={activeCard} />
-                <TransactionHistory 
-                  transactions={transactions} 
-                  currency={activeCard?.currency || 'S$'} 
-                />
-              </div>
+            <div className="space-y-4 md:space-y-6">
+              <CardDetails card={activeCard} />
+              <TransactionHistory 
+                transactions={transactions} 
+                currency={activeCard?.currency || 'S$'} 
+              />
             </div>
-          </CustomTabPanel>
-          
-          <CustomTabPanel value={activeTab} index={1}>
-            <div className="p-4 text-center">
-              <Typography sx={{ color: { xs: '#0C365A', md: 'text.secondary' } }}>
-                No company cards available
-              </Typography>
-            </div>
-          </CustomTabPanel>
-        </Card> 
-      </Box>
+          </div>
+        </CustomTabPanel>
+        
+        <CustomTabPanel value={activeTab} index={1}>
+          <div className="p-4 text-center">
+            <Typography sx={{ color: { xs: '#0C365A', md: 'text.secondary' } }}>
+              No company cards available
+            </Typography>
+          </div>
+        </CustomTabPanel>
+      </Card>
       <AddCardModal 
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}

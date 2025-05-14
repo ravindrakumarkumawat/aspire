@@ -1,5 +1,6 @@
 import React from 'react';
 import { getImageUrl } from '@utils/assetUtils';
+import { Button } from '@mui/material';
 
 const MobileNav: React.FC = () => {
   const menuItems = [
@@ -14,12 +15,12 @@ const MobileNav: React.FC = () => {
     <nav className="bg-white border-t border-gray-200 py-2 shadow-lg w-full h-auto">
       <div className="grid grid-cols-5 gap-1">
         {menuItems.map((item, index) => (
-          <button
+          <Button
             key={index}
-            className={`flex flex-col items-center justify-center p-2 ${
+            className={`flex flex-col items-center justify-center p-2 !normal-case ${
               item.active 
-                ? 'text-[#01D167]' 
-                : 'text-[#DDDDDD]'
+                ? '!text-[#01D167]' 
+                : '!text-[#DDDDDD]'
             }`}
           >
             <img 
@@ -29,7 +30,7 @@ const MobileNav: React.FC = () => {
               style={{ filter: item.active ? 'none' : 'grayscale(100%)' }}
             />
             <span className="text-[9pt] mt-1 font-medium">{item.label}</span>
-          </button>
+          </Button>
         ))}
       </div>
     </nav>

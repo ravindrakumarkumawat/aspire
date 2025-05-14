@@ -15,7 +15,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
           <Sidebar />
         </div>
 
-        <main className="flex-1 h-screen overflow-y-auto overscroll-contain lg:w-auto pb-16 lg:pb-0 bg-[#0C365A] lg:bg-white will-change-transform">
+        <main className="flex-1 h-screen overflow-y-auto overscroll-contain lg:w-auto pb-16 lg:pb-0 bg-[#0C365A] lg:bg-white">
           {children}
         </main>
       </div>

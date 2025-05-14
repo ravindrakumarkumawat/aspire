@@ -12,11 +12,9 @@ export const useCards = () => {
   const [activeCardIndex, setActiveCardIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Initialize cards from localStorage or generate mock data
   useEffect(() => {
     const fetchCards = async () => {
       try {
-        // Simulate API delay
         await new Promise(resolve => setTimeout(resolve, 800));
         
         const storedCards = localStorage.getItem(STORAGE_KEY);
@@ -37,7 +35,6 @@ export const useCards = () => {
         }
       } catch (error) {
         console.error('Error loading cards:', error);
-        // Fallback to mock data if localStorage fails
         const mockCards = generateMockCards();
         const mockTransactions = generateMockTransactions(mockCards.map(card => card.id));
         setCards(mockCards);
@@ -84,11 +81,9 @@ export const useCards = () => {
     const newCards = [...cards, newCard];
     setCards(newCards);
     
-    // Generate some mock transactions for the new card
     const newTransactions = generateMockTransactions([newCard.id]);
     setTransactions([...transactions, ...newTransactions]);
     
-    // Set the new card as active
     setActiveCardIndex(newCards.length - 1);
     
     return newCard;
@@ -104,6 +99,57 @@ export const useCards = () => {
     );
   };
 
+  const setSpendLimit = (cardId: string, limit: number) => {
+    setCards(prevCards => 
+      prevCards.map(card => 
+        card.id === cardId 
+          ? { ...card, limit } 
+          : card
+      )
+    );
+  };
+
+  const addToGPay = (cardId: string) => {
+    console.log(`Card ${cardId} added to Google Pay`);
+    return true;
+  };
+
+  const replaceCard = (cardId: string, newName?: string, newCardNumber?: string, newExpiryDate?: string, newCVV?: string) => {
+    const cardToReplace = cards.find(card => card.id === cardId);
+    if (!cardToReplace) return null;
+
+    const cardNumber = newCardNumber || generateCardNumber();
+    const expiryDate = newExpiryDate || generateExpiryDate();
+    const cvv = newCVV || generateCVV();
+    
+    const newCard: Card = {
+      ...cardToReplace,
+      name: newName || cardToReplace.name,
+      cardNumber,
+      expiryDate,
+      cvv,
+      frozen: false,
+    };
+    
+    setCards(prevCards => 
+      prevCards.map(card => 
+        card.id === cardId ? newCard : card
+      )
+    );
+    
+    return newCard;
+  };
+
+  const cancelCard = (cardId: string) => {
+    setCards(prevCards => prevCards.filter(card => card.id !== cardId));
+    
+    if (cards[activeCardIndex]?.id === cardId) {
+      setActiveCardIndex(Math.max(0, activeCardIndex - 1));
+    }
+    
+    return true;
+  };
+
   const getCardTransactions = (cardId: string) => {
     return transactions.filter(t => t.cardId === cardId);
   };
@@ -116,6 +162,10 @@ export const useCards = () => {
     isLoading,
     addCard,
     toggleFreezeCard,
+    setSpendLimit,
+    addToGPay,
+    replaceCard,
+    cancelCard,
     getCardTransactions
   };
 };
